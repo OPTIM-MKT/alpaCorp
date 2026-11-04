@@ -2,6 +2,8 @@
 import "../styles/ventasGlobal.css";
 import { ClientRouter } from "astro:transitions";
 import { SEO } from "astro-seo";
+import GoogleTagManagerHead from "@/components/shared/analytics/GoogleTagManagerHead.astro";
+import GoogleTagManagerBody from "@/components/shared/analytics/GoogleTagManagerBody.astro";
 
 interface Props {
   title?: string;
@@ -19,6 +21,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 <!doctype html>
 <html lang="es-MX">
   <head>
+    <GoogleTagManagerHead />
+
     <meta charset="UTF-8" />
     <meta
       name="viewport"
@@ -55,6 +59,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <ClientRouter />
   </head>
   <body class="min-h-dvh">
+    <GoogleTagManagerBody />
+
     <a
       href="#contenido"
       class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:rounded-md focus:bg-navy-900 focus:px-4 focus:py-2 focus:text-white"
