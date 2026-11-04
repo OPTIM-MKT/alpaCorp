@@ -20,24 +20,23 @@
         "links": [
             {
                 "label": "Inicio",
-                "href": "/",
-                "current": true
+                "href": "#inicio"
             },
             {
                 "label": "Tarimas",
-                "href": "#"
+                "href": "#catalogo"
             },
             {
                 "label": "Cajas & Huacales",
-                "href": "#"
+                "href": "#catalogo"
             },
             {
                 "label": "Certificación NIMF-15",
-                "href": "#"
+                "href": "#certificacion"
             },
             {
                 "label": "Contacto",
-                "href": "#"
+                "href": "#cotizacion"
             }
         ],
         "phoneLabel": "Teléfono directo",
