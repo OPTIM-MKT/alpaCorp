@@ -4,6 +4,8 @@ import { ClientRouter } from "astro:transitions";
 import { SEO } from "astro-seo";
 import GoogleTagManagerHead from "@/components/shared/analytics/GoogleTagManagerHead.astro";
 import GoogleTagManagerBody from "@/components/shared/analytics/GoogleTagManagerBody.astro";
+import FacebookPixelHead from "@/components/shared/analytics/FacebookPixelHead.astro";
+import FacebookPixelBody from "@/components/shared/analytics/FacebookPixelBody.astro";
 
 interface Props {
   title?: string;
@@ -22,6 +24,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 <html lang="es-MX">
   <head>
     <GoogleTagManagerHead />
+    <FacebookPixelHead />
 
     <meta charset="UTF-8" />
     <meta
@@ -60,6 +63,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   </head>
   <body class="min-h-dvh">
     <GoogleTagManagerBody />
+    <FacebookPixelBody />
 
     <a
       href="#contenido"

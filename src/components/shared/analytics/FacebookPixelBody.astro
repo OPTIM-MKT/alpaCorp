@@ -1,0 +1,22 @@
+---
+import { FB_PIXEL_ID } from "@/constants/analytics";
+
+interface Props {
+  id?: string;
+}
+
+const { id = FB_PIXEL_ID } = Astro.props;
+---
+
+{id && (
+  <noscript>
+    <img
+      height="1"
+      width="1"
+      style="display:none"
+      src={`https://www.facebook.com/tr?id=${id}&ev=PageView&noscript=1`}
+      alt=""
+    />
+  </noscript>
+)}
+

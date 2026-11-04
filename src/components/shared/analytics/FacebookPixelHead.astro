@@ -1,0 +1,58 @@
+---
+import { FB_PIXEL_ID } from "@/constants/analytics";
+
+interface Props {
+  id?: string;
+}
+
+const { id = FB_PIXEL_ID } = Astro.props;
+---
+
+{id && (
+  <>
+    {/* DNS Preconnect & Prefetch for Meta Pixel Performance */}
+    <link rel="preconnect" href="https://connect.facebook.net" />
+    <link rel="dns-prefetch" href="https://connect.facebook.net" />
+
+    {/* Facebook Pixel Code */}
+    <script is:inline define:vars={{ pixelId: id }}>
+      !(function (f, b, e, v, n, t, s) {
+        if (f.fbq) return;
+        n = f.fbq = function () {
+          n.callMethod
+            ? n.callMethod.apply(n, arguments)
+            : n.queue.push(arguments);
+        };
+        if (!f._fbq) f._fbq = n;
+        n.push = n;
+        n.loaded = !0;
+        n.version = "2.0";
+        n.queue = [];
+        t = b.createElement(e);
+        t.async = !0;
+        t.src = v;
+        s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s);
+      })(
+        window,
+        document,
+        "script",
+        "https://connect.facebook.net/en_US/fbevents.js",
+      );
+      fbq("init", pixelId);
+    </script>
+
+    {/* Track SPA Page Views with Astro ClientRouter (View Transitions) */}
+    <script is:inline>
+      if (!window.__fbPageViewListenerAttached) {
+        window.__fbPageViewListenerAttached = true;
+        document.addEventListener("astro:page-load", () => {
+          if (typeof window.fbq === "function") {
+            window.fbq("track", "PageView");
+          }
+        });
+      }
+    </script>
+  </>
+)}
+
