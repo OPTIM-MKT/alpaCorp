@@ -6,6 +6,7 @@ import GoogleTagManagerHead from "@/components/shared/analytics/GoogleTagManager
 import GoogleTagManagerBody from "@/components/shared/analytics/GoogleTagManagerBody.astro";
 import FacebookPixelHead from "@/components/shared/analytics/FacebookPixelHead.astro";
 import FacebookPixelBody from "@/components/shared/analytics/FacebookPixelBody.astro";
+import GoogleAdsHead from "@/components/shared/analytics/GoogleAdsHead.astro";
 
 interface Props {
   title?: string;
@@ -25,6 +26,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   <head>
     <GoogleTagManagerHead />
     <FacebookPixelHead />
+    <GoogleAdsHead />
 
     <meta charset="UTF-8" />
     <meta

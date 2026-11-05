@@ -6,6 +6,7 @@ import GoogleTagManagerHead from "@/components/shared/analytics/GoogleTagManager
 import GoogleTagManagerBody from "@/components/shared/analytics/GoogleTagManagerBody.astro";
 import FacebookPixelHead from "@/components/shared/analytics/FacebookPixelHead.astro";
 import FacebookPixelBody from "@/components/shared/analytics/FacebookPixelBody.astro";
+import GoogleAdsHead from "@/components/shared/analytics/GoogleAdsHead.astro";
 import Navbar from "@/components/Navbar.astro";
 import Footer from "@/components/Footer.astro";
 import WhatsApp from "@/components/shared/WhatsApp.astro";
@@ -35,6 +36,7 @@ const enHref = new URL(switchLocalePath(Astro.url, "en"), Astro.site ?? Astro.ur
   <head>
     <GoogleTagManagerHead />
     <FacebookPixelHead />
+    <GoogleAdsHead />
 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />

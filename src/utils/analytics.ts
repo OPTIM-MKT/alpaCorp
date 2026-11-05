@@ -1,7 +1,10 @@
+import { GOOGLE_ADS_WHATSAPP_CONVERSION_ID } from "@/constants/analytics";
+
 declare global {
   interface Window {
     dataLayer?: Record<string, unknown>[];
     fbq?: (...args: unknown[]) => void;
+    gtag?: (...args: unknown[]) => void;
   }
 }
 
@@ -37,4 +40,30 @@ export function trackFBEvent(
       window.fbq("track", event);
     }
   }
+}
+
+/**
+ * Safe helper to track conversions with Google Ads (gtag.js).
+ * Safe for SSR/SSG environments (checks `typeof window !== "undefined"`).
+ */
+export function trackGoogleAdsConversion(
+  sendTo: string = GOOGLE_ADS_WHATSAPP_CONVERSION_ID,
+  params: Record<string, unknown> = {}
+) {
+  if (typeof window !== "undefined" && typeof window.gtag === "function") {
+    window.gtag("event", "conversion", {
+      send_to: sendTo,
+      ...params,
+    });
+  }
+}
+
+/**
+ * Helper to trigger cross-platform tracking for WhatsApp contact clicks
+ * across Google Tag Manager, Meta Pixel, and Google Ads.
+ */
+export function trackWhatsAppClick() {
+  pushGTMEvent("whatsapp_click", { action: "click" });
+  trackFBEvent("Contact");
+  trackGoogleAdsConversion(GOOGLE_ADS_WHATSAPP_CONVERSION_ID);
 }

@@ -1,0 +1,79 @@
+---
+import {
+  GOOGLE_ADS_ID,
+  GOOGLE_ADS_WHATSAPP_CONVERSION_ID,
+} from "@/constants/analytics";
+
+interface Props {
+  id?: string;
+  whatsappConversionId?: string;
+}
+
+const {
+  id = GOOGLE_ADS_ID,
+  whatsappConversionId = GOOGLE_ADS_WHATSAPP_CONVERSION_ID,
+} = Astro.props;
+---
+
+{id && (
+  <>
+    {/* Preconnect & DNS-Prefetch for Google Ads */}
+    <link rel="preconnect" href="https://www.googletagmanager.com" />
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+
+    {/* Google Tag (gtag.js) for Google Ads */}
+    <script
+      is:inline
+      async
+      src={`https://www.googletagmanager.com/gtag/js?id=${id}`}
+    ></script>
+    <script is:inline define:vars={{ adsId: id, convId: whatsappConversionId }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        window.dataLayer.push(arguments);
+      }
+      window.gtag = window.gtag || gtag;
+      gtag("js", new Date());
+      gtag("config", adsId);
+
+      // Rastreo de conversión para clics en WhatsApp (delegación global en document)
+      if (!window.__googleAdsWhatsAppListenerAttached) {
+        window.__googleAdsWhatsAppListenerAttached = true;
+        document.addEventListener("click", function (event) {
+          var target = event.target;
+          if (!target || !(target instanceof Element)) return;
+          var link = target.closest(
+            'a[href*="wa.me"], a[href*="whatsapp.com"], [data-whatsapp]'
+          );
+          if (link && typeof window.gtag === "function" && convId) {
+            window.gtag("event", "conversion", {
+              send_to: convId,
+            });
+          }
+        });
+      }
+    </script>
+
+    {/* Track SPA Page Views with Astro ClientRouter (View Transitions) */}
+    <script is:inline define:vars={{ adsId: id }}>
+      if (!window.__googleAdsPageViewListenerAttached) {
+        window.__googleAdsPageViewListenerAttached = true;
+        var isFirstVisit = true;
+        document.addEventListener("astro:page-load", function () {
+          if (isFirstVisit) {
+            isFirstVisit = false;
+            return;
+          }
+          if (typeof window.gtag === "function") {
+            window.gtag("event", "page_view", {
+              page_path: window.location.pathname,
+              page_title: document.title,
+              send_to: adsId,
+            });
+          }
+        });
+      }
+    </script>
+  </>
+)}
+
